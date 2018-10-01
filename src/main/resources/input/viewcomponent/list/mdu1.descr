@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.units.content.rtx.db.MultiDataUnitService" name="Users by geo area">
+  <MaxResults/>
+  <Query entity="ent5">
+    <Input id="p0" param="rcond3.att3" type="integer" implied="false" expandStyle="in"/>
+    <Output id="att18" name="oid" index="0"/>
+    <Output id="att22" name="email" index="1"/>
+    <Output id="att20" name="surname" index="2"/>
+    <Output id="att19" name="name" index="3"/>
+    <HQL>select a_user2.oid, a_user2.email, a_user2.surname, a_user2.name from User2 a_user2
+      <Where defaultPolicy="fill" allImplied="false">(({[p0]a_user2.oid in(select a_user2_p0.oid from User2 a_user2_p0 inner join a_user2_p0.userToBuilding building_p0_1 inner join building_p0_1.buildingToGeoArea geoArea_p0_0 where geoArea_p0_0.oid in(?))}))</Where>
+    </HQL>
+  </Query>
+</Descriptor>

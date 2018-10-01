@@ -1,0 +1,60 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Descriptor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="MaxResults"/>
+        <xs:element name="Query">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Input" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="id" use="optional"/>
+                      <xs:attribute type="xs:string" name="param" use="optional"/>
+                      <xs:attribute type="xs:string" name="type" use="optional"/>
+                      <xs:attribute type="xs:string" name="implied" use="optional"/>
+                      <xs:attribute type="xs:string" name="expandStyle" use="optional"/>
+                      <xs:attribute type="xs:string" name="function" use="optional"/>
+                      <xs:attribute type="xs:string" name="attribute" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Output">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="id"/>
+                      <xs:attribute type="xs:string" name="name"/>
+                      <xs:attribute type="xs:byte" name="index"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="HQL">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element name="Where">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="defaultPolicy"/>
+                            <xs:attribute type="xs:string" name="allImplied"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="entity"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="service"/>
+      <xs:attribute type="xs:string" name="name"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

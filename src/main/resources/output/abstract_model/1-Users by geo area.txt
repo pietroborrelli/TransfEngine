@@ -1,0 +1,9 @@
+Collection [name=Users by geo area]
+
+	Block [PartitionKey [name=geoarea_oid]] ; []
+
+		Entries
+			Entry [name=oid, type=integer]
+			Entry [name=email, type=string]
+			Entry [name=surname, type=string]
+			Entry [name=name, type=string]

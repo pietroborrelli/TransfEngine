@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.units.content.rtx.db.PowerIndexUnitService" name="Register by geo area">
+  <UseFirstRowAsDefaultCurrent>false</UseFirstRowAsDefaultCurrent>
+  <Results maxResults="" blockFactor="" blockWindow=""/>
+  <SortHistorySize>1</SortHistorySize>
+  <Checkable>false</Checkable>
+  <Query entity="ent3">
+    <Input id="p0" param="rcond6.att3" type="integer" implied="false" expandStyle="in"/>
+    <Input id="p1" param="acond1" type="timestamp" implied="true" impliedText="1 = 1" expandStyle="aggregate" function="min" attribute="att10"/>
+    <Input id="p2" param="acond4" type="timestamp" implied="true" impliedText="1 = 1" expandStyle="aggregate" function="max" attribute="att10"/>
+    <Output id="att7" name="oid" index="0"/>
+    <Output id="att10" name="date" index="1"/>
+    <Output id="att9" name="value" index="2"/>
+    <Output id="att8" name="unit" index="3"/>
+    <HQL>select a_register.oid, a_register.date, a_register.value, a_register.unit from Register a_register
+      <Where defaultPolicy="fill" allImplied="false">(({[p0](a_register.registerToSmartMeter.smartMeterToBuilding.buildingToGeoArea.oid in(?))})) and (({[p1]a_register.date &gt;= ?})) and (({[p2]a_register.date &lt;= ?}))</Where>order by $$SORT_CRITERIA$$
+    </HQL>
+  </Query>
+  <SortAttributes>
+    <Attribute id="att10" dynamic="true" order="desc">a_register.date</Attribute>
+    <Attribute id="att10" dynamic="false" order="desc">a_register.date</Attribute>
+  </SortAttributes>
+</Descriptor>

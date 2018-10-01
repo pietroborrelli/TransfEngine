@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.units.utility.rtx.db.SelectorUnitService" name="Select Registers">
+  <MaxResults/>
+  <Query entity="ent3">
+    <Input id="p0" param="rcond10.att1" type="integer" implied="false" expandStyle="in"/>
+    <Input id="p1" param="acond5" type="timestamp" implied="false" expandStyle="aggregate" function="min" attribute="att10"/>
+    <Input id="p2" param="acond6" type="timestamp" implied="false" expandStyle="aggregate" function="max" attribute="att10"/>
+    <Output id="att7" name="oid" index="0"/>
+    <HQL>select a_register.oid from Register a_register
+      <Where defaultPolicy="fill" allImplied="false">(({[p0](a_register.registerToSmartMeter.oid in(?))})) and (({[p1]a_register.date &gt;= ?})) and (({[p2]a_register.date &lt;= ?}))</Where>order by a_register.date desc
+    </HQL>
+  </Query>
+</Descriptor>

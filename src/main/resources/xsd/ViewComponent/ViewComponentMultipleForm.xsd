@@ -1,0 +1,77 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Descriptor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="Entity"/>
+        <xs:element name="Query">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Input">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="id"/>
+                      <xs:attribute type="xs:string" name="param"/>
+                      <xs:attribute type="xs:string" name="type"/>
+                      <xs:attribute type="xs:string" name="implied"/>
+                      <xs:attribute type="xs:string" name="expandStyle"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="HQL">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element name="Where">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="defaultPolicy"/>
+                            <xs:attribute type="xs:string" name="allImplied"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="entity"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:byte" name="MinLength"/>
+        <xs:element name="FormFields">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Field" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element name="Slot" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="id"/>
+                            <xs:attribute type="xs:string" name="output"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                  <xs:attribute type="xs:string" name="type" use="optional"/>
+                  <xs:attribute type="xs:string" name="indexedListProperty" use="optional"/>
+                  <xs:attribute type="xs:string" name="splitOutput" use="optional"/>
+                  <xs:attribute type="xs:string" name="localized" use="optional"/>
+                  <xs:attribute type="xs:string" name="attributeId" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="service"/>
+      <xs:attribute type="xs:string" name="name"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.units.content.rtx.EntityBasedMultiEntryUnitService" name="Registers by smart meter">
+  <Entity>ent3</Entity>
+  <Query entity="ent3">
+    <Input id="p0" param="meu4.att7" type="integer" implied="false" expandStyle="in"/>
+    <HQL>from Register a_register
+      <Where defaultPolicy="" allImplied="false">(({[p0]a_register.oid in(?)}))</Where>
+    </HQL>
+  </Query>
+  <MinLength>1</MinLength>
+  <FormFields>
+    <Field id="meu4Checked" name="CheckedObjects" type="string"/>
+    <Field id="meu4DataSize" name="DataSize" type="integer"/>
+    <Field id="key" indexedListProperty="meu4" name="key" type="string" splitOutput="false">
+      <Slot id="att7" output="true"/>
+    </Field>
+    <Field id="fld26" name="oid" indexedListProperty="meu4" type="integer" localized="true" attributeId="att7"></Field>
+    <Field id="fld32" name="value" indexedListProperty="meu4" type="decimal" localized="true" attributeId="att9"></Field>
+    <Field id="fld33" name="date" indexedListProperty="meu4" type="timestamp" localized="true" attributeId="att10"></Field>
+    <Field id="fld34" name="unit" indexedListProperty="meu4" type="string" localized="false" attributeId="att8"></Field>
+  </FormFields>
+</Descriptor>

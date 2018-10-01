@@ -1,0 +1,9 @@
+Collection [name=Registers by smart meter]
+
+	Block [PartitionKey [name=smartmeter_oid]] ; [{Optional} SortKey [name=date, ordering=DESCENDING]]
+
+		Entries
+			Entry [name=oid, type=integer]
+			Entry [name=value, type=decimal]
+			Entry [name=date, type=timestamp]
+			Entry [name=unit, type=string]

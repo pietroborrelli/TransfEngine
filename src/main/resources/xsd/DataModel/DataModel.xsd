@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    
+  <xs:element name="DataModel">
+        
+    <xs:complexType>
+            
+      <xs:sequence>
+                
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="Database">
+                    
+          <xs:complexType>
+                        
+            <xs:simpleContent>
+                            
+              <xs:extension base="xs:string">
+                                
+                <xs:attribute name="id" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="url" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="schema" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="duration" type="xs:string" use="optional"/>
+                              
+              </xs:extension>
+                          
+            </xs:simpleContent>
+                      
+          </xs:complexType>
+                  
+        </xs:element>
+                
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="Entity">
+                    
+          <xs:complexType>
+                        
+            <xs:sequence>
+                            
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="Attribute">
+                                
+                <xs:complexType>
+                                    
+                  <xs:simpleContent>
+                                        
+                    <xs:extension base="xs:string">
+                                            
+                      <xs:attribute name="id" type="xs:string" use="optional"/>
+                                            
+                      <xs:attribute name="key" type="xs:string" use="optional"/>
+                                            
+                      <xs:attribute name="name" type="xs:string" use="optional"/>
+                                            
+                      <xs:attribute name="fieldName" type="xs:string" use="optional"/>
+                                            
+                      <xs:attribute name="type" type="xs:string" use="optional"/>
+                                            
+                      <xs:attribute name="javaType" type="xs:string" use="optional"/>
+                                          
+                    </xs:extension>
+                                      
+                  </xs:simpleContent>
+                                  
+                </xs:complexType>
+                              
+              </xs:element>
+                            
+              <xs:element name="OutgoingRoles" type="xs:string"/>
+                            
+              <xs:element name="InverseRoles" type="xs:string"/>
+                          
+            </xs:sequence>
+                        
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+                        
+            <xs:attribute name="name" type="xs:string" use="optional"/>
+                        
+            <xs:attribute name="className" type="xs:string" use="optional"/>
+                        
+            <xs:attribute name="duration" type="xs:string" use="optional"/>
+                        
+            <xs:attribute name="database" type="xs:string" use="optional"/>
+                      
+          </xs:complexType>
+                  
+        </xs:element>
+                
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="Role">
+                    
+          <xs:complexType>
+                        
+            <xs:simpleContent>
+                            
+              <xs:extension base="xs:string">
+                                
+                <xs:attribute name="id" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="inverseId" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="source" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="target" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="maxCard" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="fieldName" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="derived" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="database" type="xs:string" use="optional"/>
+                                
+                <xs:attribute name="direct" type="xs:string" use="optional"/>
+                              
+              </xs:extension>
+                          
+            </xs:simpleContent>
+                      
+          </xs:complexType>
+                  
+        </xs:element>
+              
+      </xs:sequence>
+            
+      <xs:attribute name="packageName" type="xs:string"/>
+            
+      <xs:attribute name="volatileKeyPolicy" type="xs:string"/>
+            
+      <xs:attribute name="useQualifiedEntities" type="xs:string"/>
+          
+    </xs:complexType>
+      
+  </xs:element>
+  
+</xs:schema>
