@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.polimi.domain.abstractmodel.Collection;
+import it.polimi.domain.abstractmodel.Entry;
+import it.polimi.domain.key.PartitionKey;
+import it.polimi.domain.key.SortKey;
 import it.polimi.mapper.datamodel.DataModel;
 import it.polimi.mapper.viewcomponent.list.Descriptor;
 
@@ -45,12 +48,18 @@ public class AbstractModelForListImpl implements AbstractModel {
 	public Collection createBlock() {
 		// get info on key from view component
 		collection.getBlock().setKey(transformationList.getBlockKey(viewComponentList));
-		// then navigate data model to set key names
+		// then navigate data model to set key names and types
 		String entity = collection.getBlock().getKey().getIdEntity();
+		
 		collection.getBlock().getKey().getPartitionKeys().stream()
 				.forEach(pk -> pk.setName(dataModelTransformation.retrievePartitionKeyName(pk, dataModel)));
+		collection.getBlock().getKey().getPartitionKeys().stream()
+			.forEach(pk -> pk.setType(dataModelTransformation.retrievePartitionKeyType(pk, dataModel)));
+		
 		collection.getBlock().getKey().getSortKeys().stream()
 				.forEach(sk -> sk.setName(dataModelTransformation.retrieveSortKeyName(sk, entity, dataModel)));
+		collection.getBlock().getKey().getSortKeys().stream()
+				.forEach(sk -> sk.setType(dataModelTransformation.retrieveSortKeyType(sk, entity, dataModel)));
 		return collection;
 	}
 
@@ -68,7 +77,15 @@ public class AbstractModelForListImpl implements AbstractModel {
 				dataModelTransformation.retrieveEntryName(e, collection.getBlock().getKey().getIdEntity(), dataModel)));
 		collection.getBlock().getEntries().stream().forEach(e -> e.setType(
 				dataModelTransformation.retrieveEntryType(e, collection.getBlock().getKey().getIdEntity(), dataModel)));
-
+		
+		//add also entry by partition key
+		for (PartitionKey pk : collection.getBlock().getKey().getPartitionKeys())
+			collection.getBlock().addEntry(new Entry (pk.getId().substring(pk.getId().lastIndexOf(".") + 1),pk.getName(),pk.getType()));
+		
+		//add also entry by sort key
+		for (SortKey sk : collection.getBlock().getKey().getSortKeys())
+			collection.getBlock().addEntry(new Entry (sk.getId().substring(sk.getId().lastIndexOf(".") + 1),sk.getName(),sk.getType()));
+				
 		return collection;
 	}
 
@@ -106,6 +123,12 @@ public class AbstractModelForListImpl implements AbstractModel {
 
 	public void setTransformationList(TransformationListImpl transformationList) {
 		this.transformationList = transformationList;
+	}
+
+	@Override
+	public Collection evaluateReadingAccessPaths() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

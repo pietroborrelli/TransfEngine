@@ -23,6 +23,12 @@ public interface AbstractModel {
 	 */
 	Collection createEntries();
 
+	/*
+	 * reading access paths given by the structure of view components and selectors
+	 */
+	Collection evaluateReadingAccessPaths();
+	
+	
 	Collection getCollection();
 
 	DataModel getDataModel();

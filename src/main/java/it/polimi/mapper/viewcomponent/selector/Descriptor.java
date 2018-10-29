@@ -291,7 +291,7 @@ public class Descriptor {
         @XmlElement(name = "Input")
         protected List<Descriptor.Query.Input> input;
         @XmlElement(name = "Output", required = true)
-        protected Descriptor.Query.Output output;
+        protected List<Descriptor.Query.Output> output;
         @XmlElement(name = "HQL", required = true)
         protected Descriptor.Query.HQL hql;
         @XmlAttribute(name = "entity")
@@ -334,8 +334,11 @@ public class Descriptor {
          *     {@link Descriptor.Query.Output }
          *     
          */
-        public Descriptor.Query.Output getOutput() {
-            return output;
+        public List<Descriptor.Query.Output> getOutput() {
+        	if (output == null) {
+        		output = new ArrayList<Descriptor.Query.Output>();
+            }
+            return this.output;
         }
 
         /**
@@ -346,7 +349,7 @@ public class Descriptor {
          *     {@link Descriptor.Query.Output }
          *     
          */
-        public void setOutput(Descriptor.Query.Output value) {
+        public void setOutput(List<Descriptor.Query.Output> value) {
             this.output = value;
         }
 

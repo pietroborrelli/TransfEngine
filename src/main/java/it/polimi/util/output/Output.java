@@ -13,6 +13,7 @@ import it.polimi.domain.abstractmodel.Entry;
 public class Output {
 
 	public final static String OUTPUT_FILE_PATH="src/main/resources/output/abstract_model/";
+	public final static String OUTPUT_SCRIPT_PATH="src/main/resources/output/physical_model/";
 	
 	public void print(Collection collection) throws IOException {
 		
@@ -32,6 +33,18 @@ public class Output {
 	    	printWriter.println("\t\t\t" + entry.toString()); 
 	    }
 
+	    
+	    printWriter.close();
+	}
+	
+public void printScript(Collection collection, String script) throws IOException {
+		
+		System.out.println("Output on: " + OUTPUT_SCRIPT_PATH + collection.getId() +"-"+ collection.getName()+".txt");
+		
+	    FileWriter fileWriter = new FileWriter(OUTPUT_SCRIPT_PATH + collection.getId() + "-"+ collection.getName()+".txt");
+	    PrintWriter printWriter = new PrintWriter(fileWriter);
+	    //script
+	    printWriter.println(script);
 	    
 	    printWriter.close();
 	}

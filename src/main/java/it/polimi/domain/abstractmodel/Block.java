@@ -29,6 +29,10 @@ public class Block {
 	public void setEntries(List<Entry> entries) {
 		this.entries = entries;
 	}
+	
+	public void addEntry(Entry entry) {
+		this.entries.add(entry);
+	}
 
 	@Override
 	public String toString() {

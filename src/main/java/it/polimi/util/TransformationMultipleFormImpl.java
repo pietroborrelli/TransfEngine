@@ -12,6 +12,7 @@ import it.polimi.domain.enumeration.Ordering;
 import it.polimi.domain.key.PartitionKey;
 import it.polimi.domain.key.PrimaryKey;
 import it.polimi.domain.key.SortKey;
+import it.polimi.mapper.datamodel.DataModel;
 import it.polimi.mapper.datamodel.DataModel.Entity;
 import it.polimi.mapper.datamodel.DataModel.Entity.Attribute;
 import it.polimi.mapper.viewcomponent.multipleform.Descriptor;
@@ -114,5 +115,76 @@ public class TransformationMultipleFormImpl implements TransformationViewCompone
 		return ordering;
 	}
 	
+	/*
+	 * Get output fields of the selector that are passed to the form (not entity based) to be rendered.   
+	 * and return them
+	 */
+	@Override
+	public List<Entry> findEntriesToAggregate(Object viewComponent, DataModel dataModel) {
+		String name = "";
+		String id ="";
+		it.polimi.mapper.viewcomponent.selector.Descriptor componentSelector = (it.polimi.mapper.viewcomponent.selector.Descriptor) viewComponent;
+		it.polimi.mapper.viewcomponent.selector.Descriptor.Query.Output queryOutput = null;
+		List<Entry> entries = new ArrayList<>();
+		System.out.println("Searching entries to aggregate for reading access path by Selector "  + componentSelector.getName());
+		
+		for (Object obj : componentSelector.getQuery().getOutput()) {
 
+			// reflection on Descriptor.Query.Output
+			if (obj.getClass().equals(it.polimi.mapper.viewcomponent.selector.Descriptor.Query.Output.class)) {
+
+				queryOutput = (it.polimi.mapper.viewcomponent.selector.Descriptor.Query.Output) obj;
+				System.out.println("Found an entry that can be aggregated: " + queryOutput.getName());
+				
+				name = queryOutput.getName();
+				id = queryOutput.getId();
+				//if there is default value oid for primary key can raise ononimie problems, so updated always the pk
+				if (queryOutput.getName().equals("oid")) {
+					Entity entity = dataModelTransformation.retrieveEntityById(componentSelector.getQuery().getEntity(), dataModel);
+					name = entity.getName().toLowerCase()+"_oid";
+				}
+				
+				entries.add(new Entry(id,name));
+			}
+		}
+
+		return entries;
+	}
+	
+	/*
+	 * Get output fields of the selector that are passes to the form (not entity based) to be rendered.   
+	 * @input two lists, 
+	 * @return collectionEntries without single entries that have been aggregated
+	 */
+	@Override
+	public List<Entry> updateEntriesOfCollection(List<Entry> aggregateEntries, List<Entry> collectionEntries) {
+		boolean found = false;
+		Entry aggregatedEntry = new Entry();
+		aggregatedEntry.setId("");
+		aggregatedEntry.setName("");
+		
+		for (Entry e : collectionEntries) {
+			for (Entry e2 : aggregateEntries) {
+				
+				if (e.equals(e2)) {
+					collectionEntries.remove(e);
+				}
+			}
+		}
+		//concatenate id and names
+		for (Entry e : aggregateEntries) {
+			aggregatedEntry.concatenateId(e.getId());
+			aggregatedEntry.concatenateName(e.getName());
+		}
+		//remove last 2 characters
+		aggregatedEntry.setName(aggregatedEntry.getName().substring(0, aggregatedEntry.getName().length() - 2));
+		aggregatedEntry.setId(aggregatedEntry.getId().substring(0, aggregatedEntry.getId().length() - 2));
+		
+		//default type for aggregates is string/text
+		aggregatedEntry.setType("string");
+		collectionEntries.add(aggregatedEntry);
+		
+		return collectionEntries;
+	}
+	
 }

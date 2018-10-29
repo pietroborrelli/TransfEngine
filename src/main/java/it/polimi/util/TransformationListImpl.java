@@ -11,6 +11,7 @@ import it.polimi.domain.enumeration.Ordering;
 import it.polimi.domain.key.PartitionKey;
 import it.polimi.domain.key.PrimaryKey;
 import it.polimi.domain.key.SortKey;
+import it.polimi.mapper.datamodel.DataModel;
 import it.polimi.mapper.viewcomponent.list.Descriptor;
 import it.polimi.mapper.viewcomponent.list.Descriptor.SortAttributes.Attribute;
 
@@ -124,5 +125,21 @@ public class TransformationListImpl implements TransformationViewComponent {
 		
 		}
 		return entries;
+	}
+
+
+
+	@Override
+	public List<Entry> findEntriesToAggregate(Object viewComponent, DataModel dataModel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<Entry> updateEntriesOfCollection(List<Entry> aggregateEntries, List<Entry> collectionEntries) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

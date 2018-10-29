@@ -35,6 +35,27 @@ public class DataModelTransformation {
 	}
 
 	/*
+	 * type of sort key is related to the entity specified in view component
+	 * @param sortKey : sort key to update
+	 * @param entity : reference of sort key belongs to; used to access directly entity in data model
+	 * @param dataModel
+	 * 
+	 * @return type of sort key specified in data model
+	 */
+	public String retrieveSortKeyType(SortKey sortKey, String entity, DataModel dataModel) {
+
+		for (Entity e : dataModel.getEntity()) {
+			if (e.getId().equals(entity)) {
+
+				return e.getAttribute().stream().filter(sk -> sk.getId().equals(sortKey.getReferenceAttributeEntity()))
+						.collect(Collectors.toList()).get(0).getType();
+			}
+		}
+
+		return "no type found";
+	}
+	
+	/*
 	 * @param entityId : entity id looking for
 	 * @param dataModel
 	 * 
@@ -74,6 +95,28 @@ public class DataModelTransformation {
 		return "no name found";
 	}
 
+	/*
+	 * name of partition key is related to another entity Iteration over all
+	 * entities attributes of data model
+	 * @param partitionKey : partition key to update
+	 * @param dataModel
+	 * @return type of partition key specified in data model
+	 */
+	public String retrievePartitionKeyType(PartitionKey partitionKey, DataModel dataModel) {
+
+		for (Entity e : dataModel.getEntity()) {
+
+			List<it.polimi.mapper.datamodel.DataModel.Entity.Attribute> attributes = e.getAttribute().stream()
+					.filter(pk -> pk.getId().equals(partitionKey.getReferenceAttributeEntity()))
+					.collect(Collectors.toList());
+
+			if (!attributes.isEmpty())
+				return attributes.get(0).getType();
+
+		}
+		return "no type found";
+	}
+	
 	/**
 	 * @param entry: entry to update
 	 * @param entity: used to access directly entity in data model

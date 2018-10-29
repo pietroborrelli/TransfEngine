@@ -6,6 +6,7 @@ public class SortKey {
 
 	private String id;
 	private String name;
+	private String type;
 	private String referenceAttributeEntity;
 	private Ordering ordering;
 	
@@ -69,6 +70,12 @@ public class SortKey {
 	@Override
 	public String toString() {
 		return "{Optional} SortKey [name=" + name + ", ordering=" + ordering + "]";
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 

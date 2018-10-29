@@ -4,6 +4,7 @@ public class PartitionKey {
 
 	private String id;
 	private String name;
+	private String type;
 	private String referenceAttributeEntity;
 
 	// id contains reference to attribute of entity
@@ -40,6 +41,14 @@ public class PartitionKey {
 	@Override
 	public String toString() {
 		return "PartitionKey [name=" + name + "]";
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

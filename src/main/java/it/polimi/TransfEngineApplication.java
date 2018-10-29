@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import it.polimi.domain.abstractmodel.Collection;
 import it.polimi.mapper.datamodel.DataModel;
 import it.polimi.mapper.viewcomponent.list.Descriptor;
+import it.polimi.parser.Parser;
 import it.polimi.service.DataModelService;
 import it.polimi.service.ListServiceImpl;
 import it.polimi.service.MultipleFormServiceImpl;
@@ -41,6 +42,9 @@ public class TransfEngineApplication implements CommandLineRunner {
 	@Autowired
 	private AbstractModelForMultipleFormImpl abstractForModelMultipleForm;
 
+	@Autowired
+	private Parser cassandraParser;
+	
 	@Autowired
 	private Output output;
 
@@ -91,9 +95,15 @@ public class TransfEngineApplication implements CommandLineRunner {
 			collection = abstractForModelMultipleForm.createCollection();
 			collection = abstractForModelMultipleForm.createBlock();
 			collection = abstractForModelMultipleForm.createEntries();
+			
+			//reading access paths
+			collection = abstractForModelMultipleForm.evaluateReadingAccessPaths();
 
 			try {
+				//print noAM
 				output.print(collection);
+				//print Physical Implementation
+				output.printScript(collection,cassandraParser.buildPhysicalModel(collection));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -102,7 +112,7 @@ public class TransfEngineApplication implements CommandLineRunner {
 		}
 
 	}
-
+	//list component and multiple detail view component use same class Descriptor
 	private void createLogicalModelFromListAndMultipleDetailViewComponent(DataModel dataModel) {
 		Collection collection;
 		ArrayList<Descriptor> viewComponentList = (ArrayList<Descriptor>) viewComponentListService
@@ -121,7 +131,10 @@ public class TransfEngineApplication implements CommandLineRunner {
 			collection = abstractModelForList.createEntries();
 
 			try {
+				//print noAM
 				output.print(collection);
+				//print Physical Implementation
+				output.printScript(collection,cassandraParser.buildPhysicalModel(collection));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
